@@ -8,7 +8,7 @@ import (
 const (
 	merchantID      = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
 	callbackURL     = "http://localhost:8080/verify"
-	apiURL          = "https://de.zarinpal.com/pg/services/WebGate/wsdl"
+	apiURL          = "https://www.zarinpal.com/pg/services/WebGate/wsdl"
 	zarinpalGateURL = "https://www.zarinpal.com/pg/StartPay/"
 )
 
