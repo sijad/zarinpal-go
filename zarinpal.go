@@ -139,7 +139,7 @@ type PaymentGatewayImplementationServicePortType struct {
 
 func NewPaymentGatewayImplementationServicePortType(url string, tls bool, auth *BasicAuth) *PaymentGatewayImplementationServicePortType {
 	if url == "" {
-		url = "https://de.zarinpal.com/pg/services/WebGate/service"
+		url = "https://www.zarinpal.com/pg/services/WebGate/service"
 	}
 	client := NewSOAPClient(url, tls, auth)
 
