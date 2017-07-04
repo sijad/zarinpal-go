@@ -11,6 +11,7 @@ const (
 	verifyEndpoint  = "https://sandbox.zarinpal.com/pg/rest/WebGate/PaymentVerification.json"
 )
 
+// RequestData holds request POST data.
 type RequestData struct {
 	MerchantID  string
 	CallbackURL string
@@ -18,65 +19,66 @@ type RequestData struct {
 	Description string
 }
 
+// Request implements sending request to create new transaction.
 type Request struct {
 	endpoint string
 	data     *RequestData
 }
 
-type requestResponse struct {
+// RequestResponse holds request response data.
+type RequestResponse struct {
 	Status    int
 	Authority string
 	Errors    *map[string][]string `json:errors`
 }
 
-func (r *Request) Request() (*requestResponse, error) {
-	result := &requestResponse{}
+// Request send HTTP request to endpoint.
+func (r *Request) Request() (*RequestResponse, error) {
+	result := &RequestResponse{}
 	if err := postData(r.endpoint, &r.data, result); err != nil {
 		return nil, err
 	}
 
-	// if result.Status != 100 {
-	//     return result, errors.New("An error occurred.")
-	// }
-
 	return result, nil
 }
 
+// NewRequest creates new instance of Request.
 func NewRequest(merchantID, callbackURL string, amount int, description string) Request {
 	data := &RequestData{merchantID, callbackURL, amount, description}
 	return Request{requestEndpoint, data}
 }
 
+// VerifyData holds verify POST data.
 type VerifyData struct {
 	MerchantID string
 	Authority  string
 	Amount     int
 }
 
+// Verify implements sending request to verify a transaction.
 type Verify struct {
 	endpoint string
 	data     *VerifyData
 }
 
-type verifyResponse struct {
+// VerifyResponse holds verify response data.
+type VerifyResponse struct {
 	Status    int
 	Authority string
 	Errors    *map[string][]string `json:errors`
 }
 
-func (v *Verify) Verify() (*verifyResponse, error) {
-	result := &verifyResponse{}
+// Verify send HTTP request to endpoint.
+func (v *Verify) Verify() (*VerifyResponse, error) {
+	result := &VerifyResponse{}
 	if err := postData(v.endpoint, &v.data, result); err != nil {
 		return nil, err
 	}
 
-	// if result.Status != 100 {
-	//     return result, errors.New("An error occurred.")
-	// }
-
 	return result, nil
 }
 
+// NewVerify returns a new instance of Verify.
 func NewVerify(merchantID, authority string, amount int) Verify {
 	data := &VerifyData{merchantID, authority, amount}
 	return Verify{verifyEndpoint, data}
