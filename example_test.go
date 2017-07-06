@@ -1,4 +1,4 @@
-package main
+package zarinpal_test
 
 import (
 	"bufio"
@@ -8,7 +8,7 @@ import (
 	"github.com/sijad/zarinpal-go"
 )
 
-func main() {
+func ExampleSimple() {
 	merchantID := "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 	callbackurl := "http://yoursite.com/callbackurl"
 	amount := 100
@@ -35,13 +35,14 @@ func main() {
 	verifyResponse, err := v.Verify()
 
 	if err != nil {
-		// An error occured durring verify.
+		if verifyResponse != nil {
+			// status code was not 100, so the verification has been faild.
+			panic("Unsuccessful paymnet.")
+		}
+
+		// An error occured durring verification.
 		panic(err)
 	}
 
-	if verifyResponse.Status == 100 {
-		fmt.Println("Successful paymnet.")
-	} else {
-		fmt.Println("Unsuccessful paymnet :(.")
-	}
+	fmt.Println("Successful paymnet.")
 }
