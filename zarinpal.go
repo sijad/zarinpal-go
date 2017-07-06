@@ -3,12 +3,14 @@ package zarinpal
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"net/http"
 )
 
 const (
-	requestEndpoint = "https://sandbox.zarinpal.com/pg/rest/WebGate/PaymentRequest.json"
-	verifyEndpoint  = "https://sandbox.zarinpal.com/pg/rest/WebGate/PaymentVerification.json"
+	baseurl         = "https://www.zarinpal.com/pg/rest/WebGate"
+	requestEndpoint = baseurl + "PaymentRequest.json"
+	verifyEndpoint  = baseurl + "PaymentVerification.json"
 )
 
 // RequestData holds request POST data.
@@ -22,7 +24,7 @@ type RequestData struct {
 // Request implements sending request to create new transaction.
 type Request struct {
 	endpoint string
-	data     *RequestData
+	data     RequestData
 }
 
 // RequestResponse holds request response data.
@@ -39,12 +41,16 @@ func (r *Request) Request() (*RequestResponse, error) {
 		return nil, err
 	}
 
+	if result.Status != 100 {
+		return result, errors.New("An error occurred")
+	}
+
 	return result, nil
 }
 
 // NewRequest creates new instance of Request.
 func NewRequest(merchantID, callbackURL string, amount int, description string) Request {
-	data := &RequestData{merchantID, callbackURL, amount, description}
+	data := RequestData{merchantID, callbackURL, amount, description}
 	return Request{requestEndpoint, data}
 }
 
@@ -58,7 +64,7 @@ type VerifyData struct {
 // Verify implements sending request to verify a transaction.
 type Verify struct {
 	endpoint string
-	data     *VerifyData
+	data     VerifyData
 }
 
 // VerifyResponse holds verify response data.
@@ -75,12 +81,16 @@ func (v *Verify) Verify() (*VerifyResponse, error) {
 		return nil, err
 	}
 
+	if result.Status != 100 {
+		return result, errors.New("An error occurred")
+	}
+
 	return result, nil
 }
 
 // NewVerify returns a new instance of Verify.
 func NewVerify(merchantID, authority string, amount int) Verify {
-	data := &VerifyData{merchantID, authority, amount}
+	data := VerifyData{merchantID, authority, amount}
 	return Verify{verifyEndpoint, data}
 }
 
