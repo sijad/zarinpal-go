@@ -8,9 +8,13 @@ import (
 )
 
 const (
-	baseurl         = "https://www.zarinpal.com/pg/rest/WebGate"
+	baseurl         = "https://www.zarinpal.com/pg/rest/WebGate/"
 	requestEndpoint = baseurl + "PaymentRequest.json"
 	verifyEndpoint  = baseurl + "PaymentVerification.json"
+
+	sandboxBaseurl         = "https://sandbox.zarinpal.com/pg/rest/WebGate/"
+	sandboxRequestEndpoint = sandboxBaseurl + "PaymentRequest.json"
+	sandboxVerifyEndpoint  = sandboxBaseurl + "PaymentVerification.json"
 )
 
 // RequestData holds request POST data.
@@ -32,6 +36,12 @@ type RequestResponse struct {
 	Status    int
 	Authority string
 	Errors    *map[string][]string `json:"errors"`
+}
+
+// Sandbox set to use sandbox endpoint.
+func (r *Request) Sandbox() *Request {
+	r.endpoint = sandboxRequestEndpoint
+	return r
 }
 
 // Exec send HTTP request to endpoint.
@@ -72,6 +82,12 @@ type VerifyResponse struct {
 	Status    int
 	Authority string
 	Errors    *map[string][]string `json:"errors"`
+}
+
+// Sandbox set to use sandbox endpoint.
+func (v *Verify) Sandbox() *Verify {
+	v.endpoint = sandboxVerifyEndpoint
+	return v
 }
 
 // Exec send HTTP request to endpoint.
