@@ -21,7 +21,7 @@ const (
 type RequestData struct {
 	MerchantID  string
 	CallbackURL string
-	Amount      int
+	Amount      uint
 	Description string
 }
 
@@ -59,7 +59,7 @@ func (r *Request) Exec() (*RequestResponse, error) {
 }
 
 // NewRequest creates new instance of Request.
-func NewRequest(merchantID, callbackURL string, amount int, description string) Request {
+func NewRequest(merchantID, callbackURL string, amount uint, description string) Request {
 	data := RequestData{merchantID, callbackURL, amount, description}
 	return Request{requestEndpoint, data}
 }
@@ -68,7 +68,7 @@ func NewRequest(merchantID, callbackURL string, amount int, description string) 
 type VerifyData struct {
 	MerchantID string
 	Authority  string
-	Amount     int
+	Amount     uint
 }
 
 // Verify implements sending request to verify a transaction.
@@ -105,7 +105,7 @@ func (v *Verify) Exec() (*VerifyResponse, error) {
 }
 
 // NewVerify returns a new instance of Verify.
-func NewVerify(merchantID, authority string, amount int) Verify {
+func NewVerify(merchantID, authority string, amount uint) Verify {
 	data := VerifyData{merchantID, authority, amount}
 	return Verify{verifyEndpoint, data}
 }
