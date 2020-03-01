@@ -31,7 +31,7 @@ type Request struct {
 type RequestResponse struct {
 	Status    int
 	Authority string
-	Errors    *map[string][]string `json:errors`
+	Errors    *map[string][]string `json:"errors"`
 }
 
 // Request send HTTP request to endpoint.
@@ -71,7 +71,7 @@ type Verify struct {
 type VerifyResponse struct {
 	Status    int
 	Authority string
-	Errors    *map[string][]string `json:errors`
+	Errors    *map[string][]string `json:"errors"`
 }
 
 // Verify send HTTP request to endpoint.
