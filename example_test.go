@@ -8,7 +8,7 @@ import (
 	"github.com/sijad/zarinpal-go"
 )
 
-func ExampleSimple() {
+func Example() {
 	merchantID := "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 	callbackurl := "http://yoursite.com/callbackurl"
 	amount := 100
@@ -16,7 +16,7 @@ func ExampleSimple() {
 
 	// new request
 	r := zarinpal.NewRequest(merchantID, callbackurl, amount, description)
-	requestResponse, err := r.Request()
+	requestResponse, err := r.Exec()
 
 	if err != nil {
 		// An error occured durring request.
@@ -32,7 +32,7 @@ func ExampleSimple() {
 
 	// do verify
 	v := zarinpal.NewVerify(merchantID, requestResponse.Authority, amount)
-	verifyResponse, err := v.Verify()
+	verifyResponse, err := v.Exec()
 
 	if err != nil {
 		if verifyResponse != nil {

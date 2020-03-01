@@ -34,8 +34,8 @@ type RequestResponse struct {
 	Errors    *map[string][]string `json:"errors"`
 }
 
-// Request send HTTP request to endpoint.
-func (r *Request) Request() (*RequestResponse, error) {
+// Exec send HTTP request to endpoint.
+func (r *Request) Exec() (*RequestResponse, error) {
 	result := &RequestResponse{}
 	if err := postData(r.endpoint, &r.data, result); err != nil {
 		return nil, err
@@ -74,8 +74,8 @@ type VerifyResponse struct {
 	Errors    *map[string][]string `json:"errors"`
 }
 
-// Verify send HTTP request to endpoint.
-func (v *Verify) Verify() (*VerifyResponse, error) {
+// Exec send HTTP request to endpoint.
+func (v *Verify) Exec() (*VerifyResponse, error) {
 	result := &VerifyResponse{}
 	if err := postData(v.endpoint, &v.data, result); err != nil {
 		return nil, err
